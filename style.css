@@ -41,13 +41,13 @@ h1 span {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
+.question div {
+    margin-bottom: 10px;
+}
+
 .form_quizz {
     display: flex;
     flex-direction: column;
-}
-
-.form_quizz div {
-    margin-bottom: 15px;
 }
 
 input {
