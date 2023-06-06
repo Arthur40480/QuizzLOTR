@@ -19,7 +19,7 @@ h1 span {
     align-items: center;
 }
 
-.quizz_message {
+.message_container {
     width: 860px;
     text-align: center;
     padding: 10px 0 10px 30px;
@@ -76,4 +76,10 @@ button:hover {
     width: 90%;
     padding: 10px;
     border-radius: 4px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.score {
+    font-weight: bold;
+    font-size: 30px;
 }

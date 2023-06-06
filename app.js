@@ -4,11 +4,12 @@ import question from "./question.js";
 // Element du DOM
 const quizzFormElt = document.querySelector("form");
 const quizzButtonElt = document.querySelector("button");
-const quizzMessageElt = document.querySelector("p");
+const quizzMessageElt = document.querySelector(".quizz_message");
+const messageContaineElt = document.querySelector(".message_container");
+const quizzScoreElt = document.querySelector(".score");
 
 //Tableau des résultats
 const goodResults = [];
-const playerResults = [];
 
 //Score
 let score = 0;
@@ -58,6 +59,8 @@ question.forEach(function(element, index) {
 quizzButtonElt.addEventListener('click', function(event) {
     const formData = new FormData(quizzFormElt);
 
+    const playerResults = [];
+
     for(let pair of formData.entries()) {
         playerResults.push(parseInt(pair[1]));
     }
@@ -67,7 +70,10 @@ quizzButtonElt.addEventListener('click', function(event) {
         return;
     }
     else {
+        console.log(playerResults);
         compareResults(playerResults);
+        showResult(score);
+        score = 0;
     }
     
 });
@@ -82,12 +88,11 @@ const allExplanationQuestionElt = document.querySelectorAll(".explanation");
 function compareResults(results) {
     for(let i = 0; i < goodResults.length; i++) {
         if((results[i]) === goodResults[i]) {
-            console.log("Bonne réponse !");
             allQuestionContainerElt[i].style.backgroundImage = "linear-gradient(to right, #a8ff78, #78ffd6)";
+            allExplanationQuestionElt[i].style.display = "none"; 
             score++;
         }
         else {
-            console.log("mauvaise réponse !");
             allQuestionContainerElt[i].style.backgroundImage = "linear-gradient(to right, #f5567b, #fd674c)";
             allExplanationQuestionElt[i].style.display = "block";   
         }
@@ -105,4 +110,28 @@ function resetColor(e) {
 
 //On ajoute un evenement sur chacun des inputs.
 allInputQuizzElt.forEach(input => input.addEventListener("input", resetColor));
+
+//Fonction qui affiche le résultat.
+function showResult(result) {
+    if(result < 3) {
+        quizzScoreElt.innerText = `${result}/10 👎`;
+        quizzMessageElt.innerHTML = "😩 <span>Rien ne vas plus !</span> Va vite (re)voir les films ! 😩";
+    }
+    else if(result >= 3 && result < 6) {
+        quizzScoreElt.innerText = `${result}/10 💤`;
+        quizzMessageElt.innerHTML = "😐 <span>Peut mieux faire !</span> Es-tu un stupide hobbit joufflu ? 😐";
+    }
+    else if(result >= 6 && result < 8) {
+        quizzScoreElt.innerText = `${result}/10 👍`;
+        quizzMessageElt.innerHTML = "😎 <span>Il reste quelques erreurs !</span> La communauté de l'anneau compte sur toi ! 😎";
+    }
+    else if(result >= 8 && result < 10) {
+        quizzScoreElt.innerText = `${result}/10 ✨`;
+        quizzMessageElt.innerHTML = "😜 <span>Tu y es presque !</span> Il reste un orc ou deux à corriger encore ..! 😜";
+    }
+    else {
+        quizzScoreElt.innerText = `${result}/10 🏆`;
+        quizzMessageElt.innerHTML = "😁 <span>Félicitations !</span> La Terre du Milieu n'à aucun secret pour toi ! 😁";
+    }
+}
 
